@@ -1,0 +1,36 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "command": "dotnet",
+      "args": [
+        "build",
+        "/property:GenerateFullPaths=true",
+        "/consoleloggerparameters:NoSummary"
+      ],
+      "label": "build",
+      "detail": "Runs dotnet build",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "presentation": {
+        "reveal": "silent"
+      },
+      "problemMatcher": ["$msCompile"],
+      "type": "shell"
+    },
+    {
+      "command": "dotnet",
+      "args": ["test"],
+      "label": "test",
+      "detail": "Runs dotnet test",
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      },
+      "problemMatcher": ["$msCompile"],
+      "type": "shell"
+    }
+  ]
+}

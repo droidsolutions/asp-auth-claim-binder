@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30114.105
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{2D09CE36-C88E-4209-AD52-73F46BDF404A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DroidSolutions.Oss.AuthClaimBinder", "src\DroidSolutions.Oss.AuthClaimBinder\DroidSolutions.Oss.AuthClaimBinder.csproj", "{8DF535B4-6307-450B-B2D7-EA11A24092A0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{83A90D77-54CE-400C-8A27-2E58F3FC65DE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DroidSolutions.Oss.AuthClaimBinderTest", "test\DroidSolutions.Oss.AuthClaimBinderTest\DroidSolutions.Oss.AuthClaimBinderTest.csproj", "{826F6FFD-618D-42AD-85A5-9B43872348E4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8DF535B4-6307-450B-B2D7-EA11A24092A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8DF535B4-6307-450B-B2D7-EA11A24092A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8DF535B4-6307-450B-B2D7-EA11A24092A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8DF535B4-6307-450B-B2D7-EA11A24092A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{826F6FFD-618D-42AD-85A5-9B43872348E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{826F6FFD-618D-42AD-85A5-9B43872348E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{826F6FFD-618D-42AD-85A5-9B43872348E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{826F6FFD-618D-42AD-85A5-9B43872348E4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{8DF535B4-6307-450B-B2D7-EA11A24092A0} = {2D09CE36-C88E-4209-AD52-73F46BDF404A}
+		{826F6FFD-618D-42AD-85A5-9B43872348E4} = {83A90D77-54CE-400C-8A27-2E58F3FC65DE}
+	EndGlobalSection
+EndGlobal

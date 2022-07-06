@@ -1,0 +1,112 @@
+{
+  "name": "@droidsolutions-oss/asp-auth-claim-binder",
+  "version": "0.9.0",
+  "description": "Custom modelbinder for ASP.NET Core MVC to allow injecting claims into controller actions.",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "build": "dotnet build",
+    "test": "dotnet test"
+  },
+  "keywords": [
+    "auth",
+    "claim",
+    "binder",
+    "modelbinder",
+    "model"
+  ],
+  "author": "Stefan Ißmer <stefan.issmer@droidsolutions.de>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/droidsolutions/asp-auth-claim-binder.git"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "17.0.3",
+    "@commitlint/config-conventional": "17.0.3",
+    "@droidsolutions-oss/semantic-release-nuget": "1.1.1",
+    "@droidsolutions-oss/semantic-release-update-file": "1.2.0",
+    "@semantic-release/changelog": "6.0.1",
+    "@semantic-release/git": "10.0.1",
+    "@semantic-release/github": "8.0.4",
+    "husky": "8.0.1",
+    "semantic-release": "19.0.3"
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ],
+    "rules": {
+      "subject-case": [
+        0,
+        "always",
+        "lowerCase"
+      ]
+    }
+  },
+  "release": {
+    "branches": [
+      "+([0-9])?(.{+([0-9]),x}).x",
+      "master",
+      "main",
+      "next",
+      "next-major",
+      {
+        "name": "alpha",
+        "prerelease": true
+      },
+      {
+        "name": "beta",
+        "prerelease": true
+      },
+      {
+        "name": "develop",
+        "prerelease": true
+      }
+    ],
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      "@semantic-release/changelog",
+      "@droidsolutions-oss/semantic-release-update-file",
+      "@semantic-release/npm",
+      "@droidsolutions-oss/semantic-release-nuget",
+      [
+        "@semantic-release/git",
+        {
+          "assets": [
+            "package.json",
+            "package-lock.json",
+            "CHANGELOG.md",
+            "Directory.Build.props"
+          ],
+          "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
+        }
+      ],
+      "@semantic-release/github"
+    ],
+    "projectPath": "src/DroidSolutions.Oss.AuthClaimBinder/DroidSolutions.Oss.AuthClaimBinder.csproj",
+    "npmPublish": false,
+    "includeSymbols": true,
+    "files": [
+      {
+        "path": [
+          "Directory.Build.props"
+        ],
+        "type": "xml",
+        "replacements": [
+          {
+            "key": "Version",
+            "value": "${nextRelease.version}"
+          },
+          {
+            "key": "RepositoryCommit",
+            "value": "${nextRelease.gitHead}"
+          }
+        ]
+      }
+    ]
+  }
+}
