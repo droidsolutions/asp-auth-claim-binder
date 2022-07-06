@@ -5,7 +5,6 @@ Custom modelbinder for ASP.NET Core MVC to allow injecting claims into controlle
 [![Coverage Status](https://coveralls.io/repos/github/droidsolutions/asp-auth-claim-binder/badge.svg?branch=main)](https://coveralls.io/github/droidsolutions/asp-auth-claim-binder?branch=main)
 ![Nuget](https://img.shields.io/nuget/v/DroidSolutions.Oss.AuthClaimBinder)
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
-[![Coverage Status](https://coveralls.io/repos/github/droidsolutions/asp-auth-claim-binder/badge.svg?branch=main)](https://coveralls.io/github/droidsolutions/asp-auth-claim-binder?branch=main)
 
 This NuGet package contains the `FromClaim` attribute that can be used in controller actions to inject a value from a claim, for example the user id or role. It also offers a ASP.NET Core Modelbinder and a Modelbinder provider.
 
