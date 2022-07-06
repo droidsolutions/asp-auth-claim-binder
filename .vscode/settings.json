@@ -1,3 +1,4 @@
 {
-  "coverage-gutters.coverageFileNames": ["coverage.info"]
+  "coverage-gutters.coverageFileNames": ["coverage.info"],
+  "dotnet-test-explorer.testArguments": "/p:CollectCoverage=true"
 }
