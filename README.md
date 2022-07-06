@@ -60,13 +60,9 @@ If the claims you have from your authentication method are complex or you want t
 This is a dictionary of string keys (the key you want to use as argument names) and a list of strings that serve as aliases. For example if you use Open ID Connect and get you claims from the JWT they might be some long strings or urls. The example below uses the key `user` and adds an alias for `System.Security.Claims.ClaimTypes.NameIdentifier`. This way the binder finds the value of the claim with the name of the `ClaimTypes.NameIdentifier` when you use `user` as the argument name.
 
 ```cs
-builder.Services.Configure<ClaimBinderSettings>(new ClaimBinderSettings
+builder.Services.Configure<ClaimBinderSettings>(o => o.AliasConfig = new Dictionary<string, List<string>>
 {
-  AliasConfig = new Dictionary<string, List<string>>
-  {
-    { "user", new List<string> { ClaimTypes.NameIdentifier } },
-    { "role", new List<string> { ClaimTypes.Role } },
-  },
+  { "role", new List<string> { ClaimTypes.Role } },
 });
 ```
 
