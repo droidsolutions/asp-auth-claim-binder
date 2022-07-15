@@ -1,6 +1,6 @@
 {
   "name": "@droidsolutions-oss/asp-auth-claim-binder",
-  "version": "1.0.0-develop.1",
+  "version": "1.0.0",
   "description": "Custom modelbinder for ASP.NET Core MVC to allow injecting claims into controller actions.",
   "main": "index.js",
   "directories": {
