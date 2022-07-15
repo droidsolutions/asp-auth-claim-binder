@@ -6,7 +6,7 @@ namespace DroidSolutions.Oss.AuthClaimBinder.Settings;
 public class ClaimBinderSettings
 {
   /// <summary>
-  /// Gets or sets a list of aliases to use when
+  /// Gets or sets a list of aliases to use when searching for claims.
   /// </summary>
   public Dictionary<string, List<string>>? AliasConfig { get; set; }
 }

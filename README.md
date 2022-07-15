@@ -2,7 +2,7 @@
 
 Custom modelbinder for ASP.NET Core MVC to allow injecting claims into controller actions.
 
-[![Coverage Status](https://coveralls.io/repos/github/droidsolutions/semantic-version/badge.svg?branch=main)](https://coveralls.io/github/droidsolutions/semantic-version?branch=main)
+[![Coverage Status](https://coveralls.io/repos/github/droidsolutions/asp-auth-claim-binder/badge.svg?branch=main)](https://coveralls.io/github/droidsolutions/asp-auth-claim-binder?branch=main)
 ![Nuget](https://img.shields.io/nuget/v/DroidSolutions.Oss.AuthClaimBinder)
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 
@@ -12,7 +12,7 @@ This project wass inspired by [this blogpost](https://www.davidkaya.com/custom-f
 
 # Installation
 
-You can grab this NuGet package from [NuGet.org](https://www.nuget.org).
+You can grab this NuGet package from [NuGet.org](https://www.nuget.org/packages/DroidSolutions.Oss.AuthClaimBinder).
 
 # How it works
 
@@ -22,6 +22,8 @@ If a claim with the given name is found the modelbinder will try to convert the 
 - `string`
 - `Guid`
 - `Enum`
+
+**Note:** Which claims exist in the User object is dependent on your authentication middleware and out of the scope of this repository. For example you can extend the `AuthenticationHandler` like described in [the official docs](https://docs.microsoft.com/en-us/aspnet/core/security/authentication/?view=aspnetcore-6.0#authentication-handler) and add custom claims to the user.
 
 # Usage
 
@@ -60,13 +62,9 @@ If the claims you have from your authentication method are complex or you want t
 This is a dictionary of string keys (the key you want to use as argument names) and a list of strings that serve as aliases. For example if you use Open ID Connect and get you claims from the JWT they might be some long strings or urls. The example below uses the key `user` and adds an alias for `System.Security.Claims.ClaimTypes.NameIdentifier`. This way the binder finds the value of the claim with the name of the `ClaimTypes.NameIdentifier` when you use `user` as the argument name.
 
 ```cs
-builder.Services.Configure<ClaimBinderSettings>(new ClaimBinderSettings
+builder.Services.Configure<ClaimBinderSettings>(o => o.AliasConfig = new Dictionary<string, List<string>>
 {
-  AliasConfig = new Dictionary<string, List<string>>
-  {
-    { "user", new List<string> { ClaimTypes.NameIdentifier } },
-    { "role", new List<string> { ClaimTypes.Role } },
-  },
+  { "role", new List<string> { ClaimTypes.Role } },
 });
 ```
 

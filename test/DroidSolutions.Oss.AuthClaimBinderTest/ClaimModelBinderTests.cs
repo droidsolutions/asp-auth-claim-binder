@@ -69,6 +69,56 @@ public class ClaimModelBinderTests
   }
 
   [Fact]
+  public async Task BindModelAsync_ShouldNotFail_WhenAliasConfigIsNull()
+  {
+    var claims = new Claim[]
+     {
+        new Claim("user", "someuser"),
+     };
+    var identity = new ClaimsIdentity(claims, "Scheme");
+    var principal = new ClaimsPrincipal(identity);
+
+    var httpContext = new Mock<HttpContext>();
+    httpContext.Setup(hc => hc.User).Returns(principal);
+
+    var bindingContext = new Mock<DefaultModelBindingContext>() { CallBase = true };
+    bindingContext.Setup(bc => bc.HttpContext).Returns(httpContext.Object);
+    bindingContext.Setup(bc => bc.FieldName).Returns("user");
+    bindingContext.Setup(bc => bc.ModelType).Returns(typeof(string));
+
+    var claimModelBinder = new ClaimModelBinder(_logMock.Object, new ClaimBinderSettings());
+
+    await claimModelBinder.BindModelAsync(bindingContext.Object);
+
+    Assert.Equal("someuser", bindingContext.Object.Result.Model);
+  }
+
+  [Fact]
+  public async Task BindModelAsync_ShouldNotFail_WhenSettingsIsNull()
+  {
+    var claims = new Claim[]
+     {
+        new Claim("user", "someuser"),
+     };
+    var identity = new ClaimsIdentity(claims, "Scheme");
+    var principal = new ClaimsPrincipal(identity);
+
+    var httpContext = new Mock<HttpContext>();
+    httpContext.Setup(hc => hc.User).Returns(principal);
+
+    var bindingContext = new Mock<DefaultModelBindingContext>() { CallBase = true };
+    bindingContext.Setup(bc => bc.HttpContext).Returns(httpContext.Object);
+    bindingContext.Setup(bc => bc.FieldName).Returns("user");
+    bindingContext.Setup(bc => bc.ModelType).Returns(typeof(string));
+
+    var claimModelBinder = new ClaimModelBinder(_logMock.Object, null);
+
+    await claimModelBinder.BindModelAsync(bindingContext.Object);
+
+    Assert.Equal("someuser", bindingContext.Object.Result.Model);
+  }
+
+  [Fact]
   public async Task BindModelAsync_ShouldTryAlias_WhenConfigured()
   {
     var claims = new Claim[]
@@ -94,6 +144,32 @@ public class ClaimModelBinderTests
     await claimModelBinder.BindModelAsync(bindingContext.Object);
 
     Assert.Equal("someuser", bindingContext.Object.Result.Model);
+  }
+
+  [Fact]
+  public async Task BindModelAsync_ShouldNotFail_IfNoAliasIsFound()
+  {
+    var claims = new Claim[]
+     {
+        new Claim("catchme", "ifyoucan"),
+     };
+    var identity = new ClaimsIdentity(claims, "Scheme");
+    var principal = new ClaimsPrincipal(identity);
+
+    var httpContext = new Mock<HttpContext>();
+    httpContext.Setup(hc => hc.User).Returns(principal);
+
+    var bindingContext = new Mock<DefaultModelBindingContext>() { CallBase = true };
+    bindingContext.Setup(bc => bc.HttpContext).Returns(httpContext.Object);
+    bindingContext.Setup(bc => bc.FieldName).Returns("user");
+    bindingContext.Setup(bc => bc.ModelType).Returns(typeof(string));
+
+    var claimModelBinder = new ClaimModelBinder(_logMock.Object, new ClaimBinderSettings
+    {
+      AliasConfig = new Dictionary<string, List<string>> { { "user", new List<string> { "username", ClaimTypes.NameIdentifier } }, },
+    });
+
+    await Assert.ThrowsAsync<InvalidOperationException>(() => claimModelBinder.BindModelAsync(bindingContext.Object));
   }
 
   [Fact]
