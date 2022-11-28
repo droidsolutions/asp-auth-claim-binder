@@ -413,8 +413,8 @@ roslynator.RCS1104.suppress_when_condition_is_inverted = true
 # Convert method group to anonymous function.
 roslynator.RCS1207.invert = true
 
-# Suppress Unity script methods.
-roslynator.RCS1213.suppress_unity_script_methods = true
+# Roslynator refactorings
+roslynator_refactorings.enabled = true
 
 # Do not use element access when expression is invocation.
 roslynator.RCS1246.suppress_when_expression_is_invocation = true
