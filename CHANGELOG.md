@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/droidsolutions/asp-auth-claim-binder/compare/v1.0.0...v1.1.0) (2023-01-18)
+
+
+### Features
+
+* add custom exceptions for model binding errors ([ea8f09b](https://github.com/droidsolutions/asp-auth-claim-binder/commit/ea8f09bafac3e211f7ac7deb997db78715c3c13e))
+
 # 1.0.0 (2022-07-15)
 
 
