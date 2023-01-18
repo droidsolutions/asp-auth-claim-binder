@@ -4,6 +4,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 
 using DroidSolutions.Oss.AuthClaimBinder;
+using DroidSolutions.Oss.AuthClaimBinder.Exceptions;
 using DroidSolutions.Oss.AuthClaimBinder.Settings;
 using DroidSolutions.Oss.AuthClaimBinderTest.Fixture;
 
@@ -43,7 +44,7 @@ public class ClaimModelBinderTests
     bindingContext.Setup(bc => bc.HttpContext).Returns(httpContext.Object);
 
     var claimModelBinder = new ClaimModelBinder(_logMock.Object, null);
-    await Assert.ThrowsAsync<InvalidOperationException>(() => claimModelBinder.BindModelAsync(bindingContext.Object));
+    await Assert.ThrowsAsync<MissingClaimException>(() => claimModelBinder.BindModelAsync(bindingContext.Object));
   }
 
   [Fact]
@@ -65,7 +66,7 @@ public class ClaimModelBinderTests
     bindingContext.Setup(bc => bc.ModelType).Returns(typeof(Guid));
 
     var claimModelBinder = new ClaimModelBinder(_logMock.Object, null);
-    await Assert.ThrowsAsync<InvalidOperationException>(() => claimModelBinder.BindModelAsync(bindingContext.Object));
+    await Assert.ThrowsAsync<ClaimParsingException>(() => claimModelBinder.BindModelAsync(bindingContext.Object));
   }
 
   [Fact]
@@ -169,7 +170,7 @@ public class ClaimModelBinderTests
       AliasConfig = new Dictionary<string, List<string>> { { "user", new List<string> { "username", ClaimTypes.NameIdentifier } }, },
     });
 
-    await Assert.ThrowsAsync<InvalidOperationException>(() => claimModelBinder.BindModelAsync(bindingContext.Object));
+    await Assert.ThrowsAsync<MissingClaimException>(() => claimModelBinder.BindModelAsync(bindingContext.Object));
   }
 
   [Fact]
@@ -217,6 +218,6 @@ public class ClaimModelBinderTests
 
     var claimModelBinder = new ClaimModelBinder(_logMock.Object, null);
 
-    await Assert.ThrowsAsync<InvalidOperationException>(() => claimModelBinder.BindModelAsync(bindingContext.Object));
+    await Assert.ThrowsAsync<ClaimParsingException>(() => claimModelBinder.BindModelAsync(bindingContext.Object));
   }
 }

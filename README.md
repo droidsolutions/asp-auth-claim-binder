@@ -1,6 +1,6 @@
 # DroidSolutions Auth Claim Binder
 
-Custom modelbinder for ASP.NET Core MVC to allow injecting claims into controller actions.
+Custom modelbinder for ASP.NET Core MVC (and Web APIs) to allow injecting claims into controller actions.
 
 [![Coverage Status](https://coveralls.io/repos/github/droidsolutions/asp-auth-claim-binder/badge.svg?branch=main)](https://coveralls.io/github/droidsolutions/asp-auth-claim-binder?branch=main)
 ![Nuget](https://img.shields.io/nuget/v/DroidSolutions.Oss.AuthClaimBinder)
@@ -8,7 +8,7 @@ Custom modelbinder for ASP.NET Core MVC to allow injecting claims into controlle
 
 This NuGet package contains the `FromClaim` attribute that can be used in controller actions to inject a value from a claim, for example the user id or role. It also offers a ASP.NET Core Modelbinder and a Modelbinder provider.
 
-This project wass inspired by [this blogpost](https://www.davidkaya.com/custom-from-attribute-for-controller-actions-in-asp-net-core/).
+This project was inspired by [this blogpost](https://www.davidkaya.com/custom-from-attribute-for-controller-actions-in-asp-net-core/).
 
 # Installation
 
@@ -16,7 +16,7 @@ You can grab this NuGet package from [NuGet.org](https://www.nuget.org/packages/
 
 # How it works
 
-The modelbinder will search available claims from the authentication for the given name you used as argument name in your controller action. Specifically the claims on the user property in the HttpContext objects are used.
+The modelbinder will search available claims from the authentication for the given name you used as argument name in your controller action. Specifically the claims on the user property in the `HttpContext` objects are used.
 If a claim with the given name is found the modelbinder will try to convert the value to the type you have specified. Currently the following types are supported:
 
 - `string`
@@ -27,11 +27,11 @@ If a claim with the given name is found the modelbinder will try to convert the 
 
 # Usage
 
-To use the attribute first the modelbinder provider must be added to the list of `ModelBinderProviders`.
+To use the attribute first the `ClaimModelBinderProvider` must be added to the list of `ModelBinderProviders`.
 
 ## Register
 
-The modelbinder provider can be added to the MVC options like this
+The `ClaimModelBinderProvider` can be added to the MVC options (when using Web API projects) like this
 
 ```cs
 builder.Services.AddControllers(options =>
@@ -59,7 +59,7 @@ The `ClaimsModelBinder` can be configured via `ClaimBinderSettings`. Those setti
 
 If the claims you have from your authentication method are complex or you want to use other argument names in your controller actions you can provide an alias list via `ClaimBinderSettings.AliasConfig`.
 
-This is a dictionary of string keys (the key you want to use as argument names) and a list of strings that serve as aliases. For example if you use Open ID Connect and get you claims from the JWT they might be some long strings or urls. The example below uses the key `user` and adds an alias for `System.Security.Claims.ClaimTypes.NameIdentifier`. This way the binder finds the value of the claim with the name of the `ClaimTypes.NameIdentifier` when you use `user` as the argument name.
+This is a dictionary of string keys (the key you want to use as argument names) and a list of strings that serve as aliases. For example if you use Open ID Connect and get you claims from the JWT they might be some long strings or urls. The example below uses the key `role` and adds an alias for `System.Security.Claims.ClaimTypes.Role`. This way the binder finds the value of the claim with the name of the `ClaimTypes.Role` when you use `role` as the argument name.
 
 ```cs
 builder.Services.Configure<ClaimBinderSettings>(o => o.AliasConfig = new Dictionary<string, List<string>>
@@ -78,6 +78,46 @@ public async Task<IActionResult> DoSomething([FromClaim] string user, [FromClaim
   // ...
 }
 ```
+
+## Exceptions
+
+There are special exceptions for errors during parsing of claim values which are explained below:
+
+### MissingClaimException
+
+When the `FromClaim` attribute is used but the claim (or it's alias) can not be found in the user claims, this exception is thrown. This is especially useful, if you want to show the caller of your API a BadRequest response or an message.
+
+For example, let's assume you want to use a value from a special header you defined. You have set up your authentication handler to get the value from the header and put it in the user claims:
+```cs
+// Authorization handler
+if (Request.Headers.TryGetValue("x-myvalue", out StringValues namespaceHeader))
+{
+  claims = claims.Append(new Claim("myvalue", namespaceHeader[0]));
+}
+
+// Contoller
+public async IActionResult MyMethod([FromClaim] string myvalue)
+{
+  // do something with myvalue
+}
+```
+
+This works, when the x-myvalue header is provided, but if it is not, than the exception would be thrown (probably leading to a 500 beeing returned). Since you know the exception that is thrown you can set up an [Exception Filter](https://learn.microsoft.com/en-us/aspnet/core/mvc/controllers/filters) or a special controller action that handles errors and process the `MissingClaimException`. See [the ASP.NET Core docs](https://learn.microsoft.com/en-us/aspnet/core/web-api/handle-errors) for more info on how to set up error handling.
+
+Thie `MissingClaimException` contains a property with the name of the claim. Be aware, that this is the name used in the controller attribute, so in case of the header example you probably need to write a custom message, indicating that the header is missing.
+
+### ClaimParsingException
+
+This exception is thrown when a value cannot be parsed to the specified type. For example let's assume you have a Guid user id and want to use it in your controller:
+```cs
+// Contoller
+public async IActionResult MyMethod([FromClaim] Guid user)
+{
+  // do something with user Id
+}
+```
+
+Dependent on how you get the user claim it could be possible that it is not a valid Guid. In this case the `ClaimModelBinder` would throw a `ClaimParsingException` with the name of the claim ("user" in this case) and the destination type (`Guid`). This can help you set up special error handling for those cases.
 
 # Development
 

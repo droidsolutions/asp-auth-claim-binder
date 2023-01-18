@@ -1,5 +1,6 @@
 using System.Security.Claims;
 
+using DroidSolutions.Oss.AuthClaimBinder.Exceptions;
 using DroidSolutions.Oss.AuthClaimBinder.Settings;
 
 using Microsoft.AspNetCore.Mvc.ModelBinding;
@@ -37,7 +38,7 @@ public class ClaimModelBinder : IModelBinder
 
       _logger.LogError("The claim {FieldName} could not be extracted from the user.", bindingContext.FieldName);
 
-      throw new InvalidOperationException($"The claim {bindingContext.FieldName} could not be extracted from the user, the value is null.");
+      throw new MissingClaimException(bindingContext.FieldName);
     }
 
     if (bindingContext.ModelType == typeof(Guid))
@@ -51,15 +52,22 @@ public class ClaimModelBinder : IModelBinder
         bindingContext.Result = ModelBindingResult.Failed();
         _logger.LogError(ex, "The claim {FieldName} could not be parsed to a Guid!", bindingContext.FieldName);
 
-        throw new InvalidOperationException($"The claim {bindingContext.FieldName} could not be parsed to a Guid!", ex);
+        throw new ClaimParsingException(
+          $"The claim {bindingContext.FieldName} could not be parsed to a Guid!",
+          ex,
+          bindingContext.FieldName,
+          bindingContext.ModelType);
       }
     }
     else if (bindingContext.ModelType.IsEnum)
     {
       if (!Enum.TryParse(bindingContext.ModelType, claim.Value, false, out var value))
       {
-        throw new InvalidOperationException(
-          $"The value {claim.Value} of the claim {bindingContext.FieldName} could not be parsed to the enum {bindingContext.ModelType.Name}.");
+        throw new ClaimParsingException(
+          $"The value {claim.Value} of the claim {bindingContext.FieldName} could not be parsed to the enum {bindingContext.ModelType.Name}.",
+          null,
+          bindingContext.FieldName,
+          bindingContext.ModelType);
       }
 
       bindingContext.Result = ModelBindingResult.Success(value);
