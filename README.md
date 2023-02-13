@@ -23,7 +23,7 @@ If a claim with the given name is found the modelbinder will try to convert the 
 - `Guid`
 - `Enum`
 
-**Note:** Which claims exist in the User object is dependent on your authentication middleware and out of the scope of this repository. For example you can extend the `AuthenticationHandler` like described in [the official docs](https://docs.microsoft.com/en-us/aspnet/core/security/authentication/?view=aspnetcore-6.0#authentication-handler) and add custom claims to the user.
+**Note:** Which claims exist in the User object is dependent on your authentication middleware and out of the scope of this repository. For example you can extend the `AuthenticationHandler` like described in [the official docs](https://docs.microsoft.com/en-us/aspnet/core/security/authentication/?view=aspnetcore-7.0#authentication-handler) and add custom claims to the user.
 
 # Usage
 
@@ -49,7 +49,7 @@ builder.Services.AddMvc(options =>
   });
 ```
 
-See the [official documentation](https://docs.microsoft.com/en-us/aspnet/core/mvc/advanced/custom-model-binding?view=aspnetcore-6.0#implementing-a-modelbinderprovider) for more info.
+See the [official documentation](https://docs.microsoft.com/en-us/aspnet/core/mvc/advanced/custom-model-binding?view=aspnetcore-7.0#implementing-a-modelbinderprovider) for more info.
 
 ## Configuration
 
