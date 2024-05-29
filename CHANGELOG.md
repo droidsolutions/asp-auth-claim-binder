@@ -1,3 +1,10 @@
+## [2.0.1](https://github.com/droidsolutions/asp-auth-claim-binder/compare/v2.0.0...v2.0.1) (2024-05-29)
+
+
+### Bug Fixes
+
+* re-release NuGet because of errors during push ([76eabc9](https://github.com/droidsolutions/asp-auth-claim-binder/commit/76eabc93d687d6d9b14cfa7e00f735c54183d72c))
+
 # [2.0.0](https://github.com/droidsolutions/asp-auth-claim-binder/compare/v1.2.0...v2.0.0) (2024-05-29)
 
 

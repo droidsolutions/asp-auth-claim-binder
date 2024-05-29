@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <CodeAnalysisRuleSet>$(MSBuildThisFileDirectory)stylecop.ruleset</CodeAnalysisRuleSet>
-    <Version>2.0.0</Version>
+    <Version>2.0.1</Version>
     <Authors>Stefan Ißmer</Authors>
     <Company>DroidSolutions GmbH</Company>
     <Description>Contains claim model binders for ASP.NET Core MVC.</Description>
@@ -16,7 +16,7 @@
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageReleaseNotes>https://github.com/droidsolutions/asp-auth-claim-binder/blob/main/CHANGELOG.md</PackageReleaseNotes>
     <RepositoryBranch>main</RepositoryBranch>
-    <RepositoryCommit>ecb936bdd23873b0317a2a526198109e3b63a1de</RepositoryCommit>
+    <RepositoryCommit>76eabc93d687d6d9b14cfa7e00f735c54183d72c</RepositoryCommit>
     <PackageTags>auth;claim;binder;modelbinder;model</PackageTags>
   </PropertyGroup>
 
