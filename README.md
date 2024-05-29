@@ -49,7 +49,7 @@ builder.Services.AddMvc(options =>
   });
 ```
 
-See the [official documentation](https://docs.microsoft.com/en-us/aspnet/core/mvc/advanced/custom-model-binding?view=aspnetcore-7.0#implementing-a-modelbinderprovider) for more info.
+See the [official documentation](https://docs.microsoft.com/en-us/aspnet/core/mvc/advanced/custom-model-binding?view=aspnetcore-8.0#implementing-a-modelbinderprovider) for more info.
 
 ## Configuration
 
