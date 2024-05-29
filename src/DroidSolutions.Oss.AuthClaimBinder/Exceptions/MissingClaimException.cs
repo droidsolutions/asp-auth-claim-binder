@@ -59,19 +59,6 @@ public class MissingClaimException : Exception
   }
 
   /// <summary>
-  /// Initializes a new instance of the <see cref="MissingClaimException"/> class.
-  /// </summary>
-  /// <param name="info">Runtime serialization info.</param>
-  /// <param name="context">Streaming context for serialization.</param>
-  protected MissingClaimException(
-    SerializationInfo info,
-    StreamingContext context)
-    : base(info, context)
-  {
-    ClaimName = info.GetString(nameof(ClaimName)) ?? string.Empty;
-  }
-
-  /// <summary>
   /// Gets the name of the claim that was not found.
   /// </summary>
   public string ClaimName { get; }
