@@ -1,3 +1,21 @@
+# [2.0.0](https://github.com/droidsolutions/asp-auth-claim-binder/compare/v1.2.0...v2.0.0) (2024-05-29)
+
+
+### Features
+
+* add support for .NET 8 ([7858c77](https://github.com/droidsolutions/asp-auth-claim-binder/commit/7858c776daf308138805c0466066994426cf45dc))
+* remove obsolete Exception constructor with SerializationInfo from ClaimParsingException ([bfda5ff](https://github.com/droidsolutions/asp-auth-claim-binder/commit/bfda5ff401da6ba56deca9e81657fde456590c62))
+* remove obsolete Exception constructor with SerializationInfo from MissingClaimException ([7c98da0](https://github.com/droidsolutions/asp-auth-claim-binder/commit/7c98da0539ebb4252d7b327590104fb50bcfaac2))
+
+
+### BREAKING CHANGES
+
+* drop support for.NET 7
+* removes the constructor overload from ClaimParsingException with SerializationInfo and StreamingContext
+See SYSLIB0051
+* removes the constructor overload from MissingClaimException with SerializationInfo and StreamingContext
+See SYSLIB0051
+
 # [1.2.0](https://github.com/droidsolutions/asp-auth-claim-binder/compare/v1.1.0...v1.2.0) (2023-02-13)
 
 
