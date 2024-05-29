@@ -1,4 +1,5 @@
 {
   "coverage-gutters.coverageFileNames": ["coverage.info"],
-  "dotnet-test-explorer.testArguments": "/p:CollectCoverage=true"
+  "dotnet-test-explorer.testArguments": "/p:CollectCoverage=true",
+  "dotnet.defaultSolution": "DroidSolutions.Oss.AuthClaimBinder.sln"
 }
