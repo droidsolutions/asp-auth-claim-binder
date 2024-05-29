@@ -69,25 +69,6 @@ public class ClaimParsingException : Exception
   }
 
   /// <summary>
-  /// Initializes a new instance of the <see cref="ClaimParsingException"/> class.
-  /// </summary>
-  /// <param name="info">Runtime serialization info.</param>
-  /// <param name="context">Streaming context for serialization.</param>
-  protected ClaimParsingException(
-    SerializationInfo info,
-    StreamingContext context)
-    : base(info, context)
-  {
-    ClaimName = info.GetString(nameof(ClaimName)) ?? string.Empty;
-
-    string? typeName = info.GetString(nameof(ClaimType));
-    if (!string.IsNullOrEmpty(typeName))
-    {
-      ClaimType = Type.GetType(typeName);
-    }
-  }
-
-  /// <summary>
   /// Gets the name of the claim that could not be parsed.
   /// </summary>
   public string ClaimName { get; }
