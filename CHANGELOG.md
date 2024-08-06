@@ -1,3 +1,10 @@
+# [2.1.0](https://github.com/droidsolutions/asp-auth-claim-binder/compare/v2.0.1...v2.1.0) (2024-08-06)
+
+
+### Features
+
+* add support for Int32 ([54a2466](https://github.com/droidsolutions/asp-auth-claim-binder/commit/54a246600cb601f974ba14cb9059b57af57f72ed))
+
 ## [2.0.1](https://github.com/droidsolutions/asp-auth-claim-binder/compare/v2.0.0...v2.0.1) (2024-05-29)
 
 
