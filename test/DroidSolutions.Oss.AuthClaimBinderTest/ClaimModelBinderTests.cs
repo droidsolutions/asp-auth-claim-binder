@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -217,6 +218,49 @@ public class ClaimModelBinderTests
     bindingContext.Setup(bc => bc.ModelType).Returns(typeof(BasicAuthRole));
 
     var claimModelBinder = new ClaimModelBinder(_logMock.Object, null);
+
+    await Assert.ThrowsAsync<ClaimParsingException>(() => claimModelBinder.BindModelAsync(bindingContext.Object));
+  }
+
+  [Fact]
+  public async Task BindingModelAsync_ShouldBeAbleToParseInts()
+  {
+    int num = 42;
+    Claim[] claims = [new Claim("someId", num.ToString(CultureInfo.InvariantCulture))];
+    ClaimsIdentity identity = new (claims, "Scheme");
+    ClaimsPrincipal principal = new(identity);
+
+    Mock<HttpContext> httpContext = new();
+    httpContext.Setup(hc => hc.User).Returns(principal);
+
+    Mock<DefaultModelBindingContext> bindingContext = new() { CallBase = true };
+    bindingContext.Setup(bc => bc.HttpContext).Returns(httpContext.Object);
+    bindingContext.Setup(bc => bc.FieldName).Returns("someId");
+    bindingContext.Setup(bc => bc.ModelType).Returns(typeof(int));
+
+    ClaimModelBinder claimModelBinder = new(_logMock.Object, null);
+
+    await claimModelBinder.BindModelAsync(bindingContext.Object);
+
+    Assert.Equal(num, bindingContext.Object.Result.Model);
+  }
+
+  [Fact]
+  public async Task BindingModelAsync_ShouldThrowInvalidOperationException_WhenIntIsNotParsable()
+  {
+    Claim[] claims = [new Claim("someId", "42,5d")];
+    ClaimsIdentity identity = new(claims, "Scheme");
+    ClaimsPrincipal principal = new(identity);
+
+    Mock<HttpContext> httpContext = new();
+    httpContext.Setup(hc => hc.User).Returns(principal);
+
+    Mock<DefaultModelBindingContext> bindingContext = new() { CallBase = true };
+    bindingContext.Setup(bc => bc.HttpContext).Returns(httpContext.Object);
+    bindingContext.Setup(bc => bc.FieldName).Returns("someId");
+    bindingContext.Setup(bc => bc.ModelType).Returns(typeof(int));
+
+    ClaimModelBinder claimModelBinder = new(_logMock.Object, null);
 
     await Assert.ThrowsAsync<ClaimParsingException>(() => claimModelBinder.BindModelAsync(bindingContext.Object));
   }

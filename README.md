@@ -22,6 +22,7 @@ If a claim with the given name is found the modelbinder will try to convert the 
 - `string`
 - `Guid`
 - `Enum`
+- `int`
 
 **Note:** Which claims exist in the User object is dependent on your authentication middleware and out of the scope of this repository. For example you can extend the `AuthenticationHandler` like described in [the official docs](https://docs.microsoft.com/en-us/aspnet/core/security/authentication/?view=aspnetcore-7.0#authentication-handler) and add custom claims to the user.
 

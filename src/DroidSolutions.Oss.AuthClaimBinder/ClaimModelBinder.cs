@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Security.Claims;
 
 using DroidSolutions.Oss.AuthClaimBinder.Exceptions;
@@ -71,6 +72,24 @@ public class ClaimModelBinder : IModelBinder
       }
 
       bindingContext.Result = ModelBindingResult.Success(value);
+    }
+    else if (bindingContext.ModelType == typeof(int))
+    {
+      try
+      {
+        bindingContext.Result = ModelBindingResult.Success(int.Parse(claim.Value, CultureInfo.InvariantCulture));
+      }
+      catch (Exception ex)
+      {
+        bindingContext.Result = ModelBindingResult.Failed();
+        _logger.LogError(ex, "The claim {FieldName} could not be parsed to an Int32!", bindingContext.FieldName);
+
+        throw new ClaimParsingException(
+          $"The claim {bindingContext.FieldName} could not be parsed to an Int32!",
+          ex,
+          bindingContext.FieldName,
+          bindingContext.ModelType);
+      }
     }
     else
     {
