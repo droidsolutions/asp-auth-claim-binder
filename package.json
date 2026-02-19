@@ -24,8 +24,8 @@
     "url": "https://github.com/droidsolutions/asp-auth-claim-binder.git"
   },
   "devDependencies": {
-    "@commitlint/cli": "20.4.1",
-    "@commitlint/config-conventional": "20.4.1",
+    "@commitlint/cli": "20.4.2",
+    "@commitlint/config-conventional": "20.4.2",
     "@droidsolutions-oss/semantic-release-nuget": "2.0.1",
     "@droidsolutions-oss/semantic-release-update-file": "1.4.0",
     "@semantic-release/changelog": "6.0.3",
