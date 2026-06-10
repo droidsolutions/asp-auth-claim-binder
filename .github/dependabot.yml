@@ -9,6 +9,9 @@ updates:
     assignees:
       - "Kampfmoehre"
     groups:
+      mvc:
+        patterns:
+          - "Microsoft.AspNetCore.Mvc.*"
       net:
         patterns:
           - "Microsoft.Extensions.*"
